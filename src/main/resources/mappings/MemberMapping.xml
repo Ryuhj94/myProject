@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MemberDAO">
+
+	<insert id="joinMember">
+		<![CDATA[
+			INSERT INTO member(id, password, name, birthdate, mail, sex, nationality, nickname)
+			VALUES(#{id}, #{password}, #{name}, #{birthdate}, #{mail}, #{sex}, #{nationality}, #{nickname})
+		]]>
+	</insert>
+	
+	<select id="loginMember" resultType="member">
+		<![CDATA[
+			SELECT * FROM member WHERE id=#{id} AND password=#{password}
+		]]>
+	</select>
+	
+	<select id="idCheck" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) FROM member WHERE id=#{id}
+		]]>
+	</select>
+	<update id="usermodify">
+		<![CDATA[
+			UPDATE member SET password=#{password}, nickname=#{nickname}, profile_img_path=#{profile_img_path} WHERE id=#{id}
+		]]>
+	</update>
+	
+	<select id="getMemberList" resultType="member">
+		SELECT * 
+		FROM member ORDER BY join_date DESC
+<!-- 		WHERE 1 = 1
+		<if test="searchCondition == 'TITLE'">
+			AND TITLE LIKE CONCAT ('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchCondition == 'CONTENT'">
+			AND CONTENT LIKE CONCAT ('%', #{searchKeyword}, '%')
+		</if>
+		ORDER BY SEQ DESC		 -->
+	</select>
+</mapper>

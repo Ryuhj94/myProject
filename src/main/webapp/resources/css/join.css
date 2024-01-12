@@ -1,0 +1,162 @@
+@charset "UTF-8";
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0px;
+    overflow-x: hidden;
+}
+.mx-auto{
+	margin-top: 30px;
+	width: 700px;
+	height: 800px;
+}
+.logo-area{
+    width: 100%;
+    height: 50px;
+}
+.logo{
+    height: 100%;
+    margin-left: 70px;
+    cursor: pointer;
+}
+.input-area{
+    margin-top: 50px;
+    height: 600px;
+}
+.input-item{
+    position: relative;
+    margin-left: 80px;
+    width: 400px;
+    height: 50px;
+    font-size: 20px;
+    border: 1px solid rgb(186, 186, 186);
+    padding-left: 50px;
+    outline: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.input-item:focus{
+    border: 3px solid green;outline: none;
+}
+#sex-nationality-area{
+    margin-left: 80px;
+    width: 400px;
+    height: 80px;
+    outline: none;  
+}
+input[type="radio"] {
+    display: none;
+}
+label {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    padding-top: 10px;
+    top:20px;
+    width: 95px;
+    height: 50px;
+    font-size: 20px;
+    border: 1px solid rgb(212, 212, 212);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+input[type="radio"]:checked + label {
+    border: 3px solid green;
+}
+
+#sex-nationality-area button{ 
+    margin: 5px;
+    margin-top: 20px;
+    width: 85px;
+    height: 60px;
+    font-size: 20px;
+    outline: none;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#imput-area{
+    width: 700px;
+    height: 200px;
+}
+#join-edn{
+    background-color: rgb(0, 97, 0);
+    font-size: 30px;
+    height: 80px;
+    margin-top: 10px;
+    padding-left: 0px;
+    color: white;
+}
+.input-img{
+    position: relative;
+    width: 30px;
+    height: 30px;
+    right: 395px;
+}
+.error-massage1{
+    position: relative;
+    bottom: 0px;
+    left: 80px;
+    width: 400px;
+    height: 60px;
+}
+.error-massage1 p, .error-massage2 p,.error-massage3 p{
+    color: red;
+    font-weight: bold;
+    margin: 0px;
+    font-size: 12px;
+    display: none;
+}
+.error-massage2{
+    position: relative;
+    left: 80px;
+    width: 400px;
+    height: 60px;
+}
+.error-massage3{
+    position: relative;
+    left: 80px;
+    width: 400px;
+    height: 50px;
+    margin-top: 0px;
+}
+input[type='date'] {
+  position: relative; 
+  padding: 10px;
+  background: url(../imgs/birthdate-Icon.svg) no-repeat left 10px center / 35px auto; 
+  text-align: center;
+  color: gray;
+}
+/* 캘린더 아이콘 및 영역 */
+input[type='date']::-webkit-calendar-picker-indicator {
+  position: absolute; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent; /* 투명하게 */
+  color: transparent; 	/* 투명하게 */
+  cursor: pointer;
+}
+/* 
+// type이 date인 input의 placeholder를 커스텀하기 위한 선택자
+// 기본적으로 type date인 input은 placeholder가 먹히지 않기 때문이다!
+// input 태그의 placeholder라는 속성값을 가져와서 content로 사용한다. 보통은 placeholder보다는 data-placeholder라는 커스텀 속성을 만들어서 사용하시는 것 같다.
+ */
+input[type='date']::before {
+  content: attr(placeholder); 
+  width: 100%;
+  height: 100%;
+}
+/* 
+// input에 어떠한 유효값이 입력된 상태인지 확인하는 선택자
+// 날짜를 선택하면 유효값이 입력된다.
+// 이 속성을 활용하고자 한다면 반드시 태그에 required 속성을 달아줘야한다.
+// 유효값이 입력된 경우 before에 있는 것을 사라지게 한다. 즉, placeholder를 사라지게 한다.
+ */
+input[type='date']:valid::before {
+  display: none; 
+}
