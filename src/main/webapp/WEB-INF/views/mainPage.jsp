@@ -6,7 +6,8 @@
 <meta charset="UTF-8">
 <title>mainPage</title>
 <link type="text/css" href="./resources/css/MainPage.css" rel="stylesheet" />
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <!-- jstl -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> <!-- jstl -->
 <!--부트스트랩 -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -15,6 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
   <!--폰트style  -->
   <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css">
+
 </head>
 
 <body style="height:1500px">
@@ -27,11 +29,9 @@
 			</button>
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="Testok">지도확인</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">자유게시판</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">자유게시판</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">자유게시판</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">문의하기</a></li>
+					<li class="nav-item"><a class="nav-link" href="board_list?board_class=notice_board">공지 사항</a></li>
+					<li class="nav-item"><a class="nav-link" href="board_list?board_class=free_board">자유 게시판</a></li>
+					<li class="nav-item"><a class="nav-link" href="board_list?board_class=gathering_board">소모임 게시판</a></li>
 					<c:choose>
 						<c:when test="${empty member.id}">
 							<li class="nav-item"><a class="nav-link" href="login">로그인</a></li>
@@ -79,22 +79,16 @@
 				<div class="carousel-item active">
 					<img src="./resources/imgs/MainImage1.jpg">
 					<div class="carousel-caption">
-						<h3>Los Angeles</h3>
-						<p>We had such a great time in LA!</p>
 					</div>
 				</div>
 				<div class="carousel-item">
 					<img src="./resources/imgs/MainImage2.jpg">
 					<div class="carousel-caption">
-						<h3>Chicago</h3>
-						<p>Thank you, Chicago!</p>
 					</div>
 				</div>
 				<div class="carousel-item">
 					<img src="./resources/imgs/MainImage3.jpg">
 					<div class="carousel-caption">
-						<h3>New York</h3>
-						<p>We love the Big Apple!</p>
 					</div>
 				</div>
 			</div>
@@ -104,7 +98,75 @@
 				<span class="carousel-control-next-icon"></span>
 			</a>
 		</div>
-		
+		</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3">
+				<table>
+					<tr>
+						<th colspan="2">공지사항</th>
+					</tr>
+				<c:forEach items="${noticeList }" var="notice">
+					<tr>
+							<td>${notice.seq}</td>
+					<c:choose>
+						<c:when test="${fn:length(notice.title)>10}">
+			 					<td>${fn:substring(notice.title,0,10) }...</td>
+			 			</c:when>
+						<c:otherwise>
+							<td>${notice.title}</td>
+						</c:otherwise>
+					</c:choose>
+					</tr>
+				</c:forEach>
+				</table>
+			</div>
+
+			<div class="col-sm-3">
+				<table>
+				<tr>
+					<th colspan="2">자유게시판 베스트</th>
+				</tr>
+				<c:forEach items="${freeList }" var="free">
+				<tr>
+					<td>${free.seq}</td>
+					<c:choose>
+						<c:when test="${fn:length(free.title)>10}">
+										<td>${fn:substring(free.title,0,10)}...</td>	
+						</c:when>
+						<c:otherwise>
+								<td>${free.title }</td>
+						</c:otherwise>
+					</c:choose>
+				</tr>	
+				</c:forEach>
+				</table>
+			</div>
+			
+			<div class="col-sm-3">
+				<table>
+					<tr>
+						<th colspan="2">소모임게시판 베스트</th>
+					</tr>
+				<c:forEach items="${gateringList }" var="gatering">
+					<tr>
+						<td>${gatering.seq}</td>
+					<c:choose>
+						<c:when test="${fn:length(gatering.title)>10}">
+			 				<td>${fn:substring(gatering.title,0,10) }...</td>
+			 		</c:when>
+						<c:otherwise>
+							<td>${gatering.title}</td>
+						</c:otherwise>
+					</c:choose>
+					</tr>
+				</c:forEach>
+				</table>
+			</div>
+			
+		</div>
 	</div>
+
 </body>
 </html>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BoardDAO">
+	<insert id="BoardInsertBoard">
+		<![CDATA[
+			INSERT INTO board (id, title, content, board_class)
+			VALUES(#{id}, #{title}, #{content}, #{board_class})
+		]]>
+	</insert>
+		<select id="board_getBoardList" resultType="board">
+		SELECT * 
+		FROM board
+		WHERE 1 = 1
+		 AND board_class=#{board_class}
+		<if test="searchCondition == 'title'">
+			AND title LIKE CONCAT ('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchCondition == 'content'">
+			AND content LIKE CONCAT ('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchCondition == 'all'">
+			AND title LIKE CONCAT ('%', #{searchKeyword}, '%') OR content LIKE CONCAT ('%', #{searchKeyword}, '%')
+		</if>
+		ORDER BY SEQ DESC LIMIT #{pagingNum}, #{pageSize}
+	</select>
+	
+	<select id="board_getBoardCount" resultType="int">
+    SELECT COUNT(*) 
+    FROM board
+    WHERE 1 = 1
+    	AND board_class=#{board_class}
+    <if test="searchCondition == 'title'">
+        AND title LIKE CONCAT ('%', #{searchKeyword}, '%')
+    </if>
+    <if test="searchCondition == 'content'">
+        AND content LIKE CONCAT ('%', #{searchKeyword}, '%')
+    </if>
+    <if test="searchCondition == 'all'">
+        AND (title LIKE CONCAT ('%', #{searchKeyword}, '%') OR content LIKE CONCAT ('%', #{searchKeyword}, '%'))
+    </if>
+    	ORDER BY SEQ DESC
+	</select>
+	
+	<select id="board_getBoard" resultType="board">
+	<![CDATA[
+		SELECT * FROM board WHERE seq=#{seq} AND board_class=#{board_class}
+			]]>
+	</select>
+	
+		<update id="board_increaseViews">
+		<![CDATA[
+			UPDATE board SET views=views+1  WHERE seq=#{seq} AND board_class=#{board_class}
+		]]>
+	</update>
+	
+	<update id="board_DecreaseBoardHit">
+		<![CDATA[
+			UPDATE board SET hit=hit-1  WHERE seq=#{seq} AND board_class=#{board_class}
+		]]>
+	</update>
+	<update id="board_IncreaseBoardHit">
+		<![CDATA[
+			UPDATE board SET hit=hit+1  WHERE seq=#{seq} AND board_class=#{board_class}
+		]]>
+	</update>
+	
+	<update id="modifyBoard">
+		<![CDATA[
+			UPDATE board SET content=#{content}  WHERE seq=#{seq} AND board_class=#{board_class}
+		]]>
+	</update>
+	<delete id="boardDelete">
+		<![CDATA[
+			DELETE FROM board WHERE seq=#{seq} AND board_class=#{board_class};
+		]]>
+	</delete>
+		<delete id="deletBoard_report">
+		<![CDATA[
+			DELETE FROM board WHERE seq=#{seq} AND board_class=#{board_class};
+		]]>
+	</delete>
+	
+	<select id="getFreeBoardList" resultType="board">
+	<![CDATA[
+				SELECT *
+				FROM board
+				WHERE DATE(write_date) = CURDATE() AND board_class='free_board'
+				ORDER BY views DESC
+				LIMIT 5;
+		]]>
+	</select>
+		<select id="getGathering_board" resultType="board">
+	<![CDATA[
+				SELECT *
+				FROM board
+				WHERE DATE(write_date) = CURDATE() AND board_class='gathering_board'
+				ORDER BY views DESC
+				LIMIT 5;
+		]]>
+	</select>
+		<select id="getNotice_board" resultType="board">
+	<![CDATA[
+				SELECT *
+				FROM board
+				WHERE  board_class='notice_board'
+				ORDER BY write_date DESC
+				LIMIT 5;
+		]]>
+	</select>
+</mapper>

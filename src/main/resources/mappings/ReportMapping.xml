@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reportDAO">
+
+<insert id="insertBoardReport">
+		<![CDATA[
+			INSERT INTO report 
+			(seq, board_class, content,  reporter, id, report_type)
+			VALUES(#{seq}, #{board_class}, #{content}, #{reporter}, #{id}, #{report_type})
+		]]>
+		</insert>
+		
+		<insert id="insertCommentReport">
+		<![CDATA[
+			INSERT INTO report 
+			(seq,seq_comment, comment_class, content,  reporter, id, report_type)
+			VALUES(#{seq}, #{seq_comment}, #{comment_class}, #{content}, #{reporter}, #{id}, #{report_type})
+		]]>
+		</insert>
+		
+		
+		
+	<select id="getreportList" resultType="report">
+		<![CDATA[
+				SELECT * FROM report
+		]]>
+	</select>
+	<delete id="deletecoment">
+			<![CDATA[
+				DELETE FROM report WHERE no=#{no}
+		]]>
+	</delete>
+	
+	
+</mapper>

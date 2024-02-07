@@ -218,10 +218,9 @@ $(function(){
     }
 
     function isBirthdate(){
-        let birthdatePattern=/^[0-9]{6}$/
+       /* let birthdatePattern=/^[0-9]{6}$/ */
         let birthdate=$("#user-birthdate").val();
-        let check= birthdatePattern.test(birthdate);
-        if(check){
+        if(birthdate!=null){
             $(".error-massage3 p").eq(1).css("display","none");
             $("#user-birthdate").css("border","1px solid rgb(186, 186, 186)");
             return true;

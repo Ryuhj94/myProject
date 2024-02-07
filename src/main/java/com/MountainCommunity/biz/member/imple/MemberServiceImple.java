@@ -10,6 +10,7 @@ import com.MountainCommunity.biz.member.MemberVO;
 @Service("memberService")
 public class MemberServiceImple implements MemberService {
 
+
 	@Autowired
 	private MemberDAOMybatis memberDAO;
 	@Override
@@ -35,24 +36,19 @@ public class MemberServiceImple implements MemberService {
 	}
 	
 	@Override
-	public String getMemberList(MemberVO vo) {
+	public List<MemberVO> getMemberList(MemberVO vo) {
 		System.out.println("getMemberList 처리");
 		return memberDAO.getMemberList(vo);
 	}
 
-	
 	@Override
-	public void updateMember(MemberVO vo) {
+	public void blockDO(MemberVO vo) {
+		memberDAO.blockDO(vo);
+	}
+	@Override
+	public void blockClear(MemberVO vo) {
+		memberDAO.blockClear(vo);
 		
+	}
 	}
 
-	@Override
-	public void deleteMember(MemberVO vo) {
-		
-	}
-	@Override
-	public MemberVO getBoard(MemberVO vo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-}

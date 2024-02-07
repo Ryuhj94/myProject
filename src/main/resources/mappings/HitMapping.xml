@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hitDAO">
+
+	<insert id="board_insertBoardHit">
+		<![CDATA[
+			INSERT INTO board_hit(id, seq, board_class)
+			VALUES(#{id}, #{seq}, #{board_class})
+		]]>
+	</insert>
+
+	<select id="board_checkBoardHit" resultType="boolean">
+	<![CDATA[
+		SELECT COUNT(*) > 0 FROM board_hit WHERE seq=#{seq} AND id=#{id} AND board_class=#{board_class}
+		]]>
+	</select>
+
+	<delete id="board_deleteBoardHit">
+		<![CDATA[
+		DELETE FROM board_hit WHERE seq=#{seq} AND id=#{id} AND board_class=#{board_class}
+		 	]]>
+	</delete>
+
+</mapper>

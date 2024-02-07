@@ -31,13 +31,17 @@
 	<select id="getMemberList" resultType="member">
 		SELECT * 
 		FROM member ORDER BY join_date DESC
-<!-- 		WHERE 1 = 1
-		<if test="searchCondition == 'TITLE'">
-			AND TITLE LIKE CONCAT ('%', #{searchKeyword}, '%')
-		</if>
-		<if test="searchCondition == 'CONTENT'">
-			AND CONTENT LIKE CONCAT ('%', #{searchKeyword}, '%')
-		</if>
-		ORDER BY SEQ DESC		 -->
 	</select>
+		
+		<update id="blockDO">
+		<![CDATA[
+			UPDATE member SET block_info=true WHERE id=#{id} 
+		]]>
+	</update>
+	
+		<update id="blockClear">
+		<![CDATA[
+			UPDATE member SET block_info=false WHERE id=#{id} 
+		]]>
+	</update>
 </mapper>

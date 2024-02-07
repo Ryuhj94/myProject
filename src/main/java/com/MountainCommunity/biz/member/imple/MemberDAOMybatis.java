@@ -34,70 +34,19 @@ public class MemberDAOMybatis {
 		System.out.println("===> Mybatis로 usermodify() 기능 처리");
 		mybatis.update("MemberDAO.usermodify", vo);
 	}
-
-	public String getMemberList(MemberVO vo) {
-		System.out.println("===> Mybatis로 getMemberList() 기능 처리");
-		List<MemberVO> list= mybatis.selectList("MemberDAO.getMemberList",vo);
-		StringBuffer result=new StringBuffer("");
-		result.append("{\"result\":[");
-		
-		for(int i=0; i<list.size(); i++) {
-			MemberVO dto=list.get(i);
-			/*
-			 * result.append("[{\"id\":\"" + dto.getId() + "\"},");
-			 * result.append("[{\"password\":\"" + dto.getPassword() + "\"},");
-			 * result.append("[{\"name\":\"" + dto.getName() + "\"},");
-			 * result.append("[{\"birthdate\":\"" + dto.getBirthdate() + "\"},");
-			 * result.append("[{\"mail\":\"" + dto.getMail() + "\"},");
-			 * result.append("[{\"nickname\":\"" + dto.getNickname() + "\"},");
-			 * result.append("[{\"join_date\":\"" + dto.getJoin_date() + "\"},");
-			 * result.append("[{\"block_info\":\"" + dto.isBlock_info() + "\"},");
-			 * result.append("[{\"sex\":\"" + dto.getSex() + "\"},");
-			 * result.append("[{\"nationality\":\"" + dto.getNationality() + "\"},");
-			 * result.append("[{\"profile_img_path\":\"" + dto.getProfile_img_path() +
-			 * "\"},"); result.append("[{\"account_permissions\":\"" +
-			 * dto.getAccount_permissions() + "\"},"); if(i != list.size()-1)
-			 * result.append(",");
-			 */
-			 result.append("{\"id\":\"" + dto.getId() + "\",");
-			    result.append("\"password\":\"" + dto.getPassword() + "\",");
-			    result.append("\"name\":\"" + dto.getName() + "\",");
-			    result.append("\"birthdate\":\"" + dto.getBirthdate() + "\",");
-			    result.append("\"mail\":\"" + dto.getMail() + "\",");
-			    result.append("\"nickname\":\"" + dto.getNickname() + "\",");
-			    result.append("\"join_date\":\"" + dto.getJoin_date() + "\",");
-			    result.append("\"block_info\":\"" + dto.isBlock_info() + "\",");
-			    result.append("\"sex\":\"" + dto.getSex() + "\",");
-			    result.append("\"nationality\":\"" + dto.getNationality() + "\",");
-			    result.append("\"profile_img_path\":\"" + dto.getProfile_img_path() + "\",");
-			    result.append("\"account_permissions\":\"" + dto.getAccount_permissions() + "\"}");
-			    if (i != list.size() - 1) { result.append(",");}
-			
+	
+	  public List<MemberVO> getMemberList(MemberVO vo) {
+	  System.out.println("===> Mybatis로 getMemberList() 기능 처리");
+	  return mybatis.selectList("MemberDAO.getMemberList",vo); 
+	  
+	  }
+		public void blockDO(MemberVO vo) {
+			mybatis.update("MemberDAO.blockDO",vo); 
 		}
-		result.append("]}");
-		return result.toString();
-	}
 
-//	// 회원정보 수정
-//	public void updateMember(MemberVO vo) {
-//		System.out.println("===> Mybatis로 updateMember() 기능 처리");
-//		mybatis.update("MemberDAO.updateBoard", vo);
-//	};
-//
-//	// 회원 탈퇴
-//	public void deleteMember(MemberVO vo) {
-//		System.out.println("===> Mybatis로 deleteMember() 기능 처리");
-//		mybatis.delete("MemberDAO.deleteBoard", vo);	
-//	};
-//	// 회원 정보
-//	public void getMember(MemberVO vo) {
-//		System.out.println("===> Mybatis로 deleteMember() 기능 처리");
-//		mybatis.delete("MemberDAO.deleteBoard", vo);	
-//	};
-//	// 회원 정보 리스트 확인
-//	public MemberVO getBoard(MemberVO vo) {
-//		System.out.println("===> Mybatis로 getBoard() 기능 처리");
-//		return null;
-//	};
+		public void blockClear(MemberVO vo) {
+			mybatis.update("MemberDAO.blockClear",vo); 
+		}
+	
 
 }

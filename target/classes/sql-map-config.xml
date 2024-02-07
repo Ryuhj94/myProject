@@ -4,10 +4,24 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="com.MountainCommunity.biz.member.MemberVO" alias="member"></typeAlias>
+		<typeAlias type="com.MountainCommunity.biz.member.MemberVO"
+			alias="member"/>
+			<typeAlias type="com.MountainCommunity.biz.board.BoardVO"
+			alias="board"/>
+					<typeAlias type="com.MountainCommunity.biz.coment.ComentVO"
+			alias="coment"/>
+					<typeAlias type="com.MountainCommunity.biz.hit.HitVO"
+			alias="hit"/>
+					<typeAlias type="com.MountainCommunity.biz.report.ReportVO"
+			alias="report"/>
+			
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mappings/MemberMapping.xml" />
+		<mapper resource="mappings/BoardMapping.xml" />
+		<mapper resource="mappings/ComentMapping.xml" />
+		<mapper resource="mappings/HitMapping.xml" />
+		<mapper resource="mappings/ReportMapping.xml" />
 	</mappers>
 </configuration>

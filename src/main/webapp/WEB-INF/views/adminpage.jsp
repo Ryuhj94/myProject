@@ -20,23 +20,12 @@
 <body>
 	<div class="container">
 		<h1>관리자 페이지</h1>
-		<div>
-			<div><button type="button" onclick="getList()">유저 리스트보기</button></div>
-			<div>
-				<select>
-					<option>1</option>
-					<option>2</option>
-					<option>3</option>
-				</select>
-				<input type="text">
-			</div>
-			<div ><button type="button" onclick="getList()">유저 리스트접기</button></div>		
-		</div>
+		<h3><a href="mainPage">메인페이지로</a></h3>
+		<h3>회원 정보</h3>
 		<table class="member-table" border="2">
 			<thead>
 			<tr>
 				<th>아이디</th>
-				<th>비밀번호</th>
 				<th>이름</th>
 				<th>생일</th>
 				<th>이메일</th>
@@ -47,56 +36,79 @@
 				<th>성별</th>
 				<th>관리 권한</th>
 				<th>국적</th>
+				<th>벤처리</th>
 			</tr>
 			</thead>
 			<tbody id="member-list-body">
-			
+				<c:forEach items="${memberList }" var="member">
+					<tr>
+						<td>${member.id }</td>
+						<td>${member.name }</td>
+						<td>${member.birthdate }</td>
+						<td>${member.mail }</td>
+						<td>${member.nickname }</td>
+						<td>${member.join_date }</td>
+						<td>${member.block_info }</td>
+						<td><img src=" ${member.profile_img_path }" class="profile"> </td>
+						<td>${member.sex }</td>
+						<td>${member.account_permissions }</td>
+						<td>${member.nationality }</td>
+					<c:choose>
+					    <c:when test="${!member.block_info}">
+					       		<td><a href="blockDO?id=${member.id }" style="color: red;">밴처리</a></td>
+					    </c:when>
+					    <c:otherwise>
+					   			 <td><a href="blockClear?id=${member.id }" style="color:orange;">밴해제</a></td>
+					    </c:otherwise>
+					</c:choose>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
-	</div>
+		<h3>신고 정보</h3>
+		<table class="reportTable" border="2">
+			<tr>
+					<th>게시물 번호</th>
+					<th>댓글 번호</th>
+					<th>댓글 종류</th>
+					<th>보드 종류</th>
+					<th>작성자</th>
+					<th>신고자</th>
+					<th>신고 내용</th>
+					<th>신고 유형</th>
+					<th>신고일자</th>
+					<th>삭제처리</th>
+			</tr>
+			<c:forEach items="${reportList }" var="report">
+			<tr>
+					<td>${report.seq }</td>
+					<td>${report. seq_comment}</td>
+					<td>${report.comment_class}</td>
+					<td>${report.board_class }</td>
+					<td>${report.id }</td>
+					<td>${report.reporter }</td>
+					<td>${report.content}</td>
+					<td>${report.report_type}</td>
+					<td>${report.report_date }</td>
+					<td>
+					<form action="reportDeletDo" method="post">
+					<input type="hidden" value="${report.seq }" name="seq">
+					<input type="hidden" value="${ report. seq_comment}" name="seq_comment">
+					<input type="hidden" value="${report.comment_class }" name="comment_class">
+					<input type="hidden" value="${report.board_class }" name="board_class">
+					<input type="hidden" value="${report.id }" name="id">
+					<input type="hidden" value="${report.reporter }" name="reporter">
+					<input type="hidden" value="${report.content }" name="content">
+					<input type="hidden" value="${report.report_type }" name="report_type">
+					<input type="hidden" value="${report.report_date }" name="report_date">
+					<input type="hidden" value="${report.no }" name="no">
+					<input type="submit" value="삭제처리" class='reportsubmit"'>
+					</form>
+					</td>
+			</tr>	
+			</c:forEach>
+		</table>
+		</div>
 </body>
 <script src="./resources/js/jquery-3.6.0.min.js"></script>
-    <!--  <script type="text/javascript" src="./resources/js/user_info.js"></script>-->
-    
-	<script type="text/javascript">
-		function getList() {
-			$.ajax({
-				url: "getMemberListDo", // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
-				type: "post", // HTTP 요청방식 (get/post)
-				dataType: 'json', // 서버에서 보내줄 데이터의 타입
-				success: function (result) {
-					console.log("에이젝스 값" + result.result);
-					let members = result.result;
-
-					if (Array.isArray(members)) {
-						let tableBody = $("#member-list-body");
-						tableBody.empty();
-						let properties = ["id", "password", "name", "birthdate", "mail", "nickname", "join_date", "block_info", "profile_img_path", "sex", "account_permissions", "nationality"];
-
-						members.forEach(function (member) {
-							let row = $("<tr></tr>");
-							properties.forEach(function (property) {
-								
-								if(property=="profile_img_path"){
-									console.log(member[property]);
-									var cell = $("<td><img src='" + member[property] + "' alt='프로필 이미지' class='profile'></td>");
-
-								}else{
-								var cell = $("<td></td>").text(member[property]);
-								}
-								row.append(cell);
-							});
-							tableBody.append(row);
-						});
-					} else {
-						console.error("서버로부터 올바른 형식의 데이터가 전달되지 않았습니다.");
-					}
-				},
-				error: function () {
-					alert("서버요청실패");
-				}
-			})
-		}
-	</script>
-
 </html>
